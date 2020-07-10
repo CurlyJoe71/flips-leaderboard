@@ -1,8 +1,25 @@
 const https = require('https');
+const http = require('http');
 const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
+const port = 7581;
 // const axios = require('axios');
 let rawData;
 let htmlData;
+
+const requestHandler = (req, res) => {
+    console.log(req.url);
+    res.end('Hi. Got your request.');
+}
+
+const server = http.createServer(requestHandler);
+
+server.listen(port, err => {
+    if (err) {
+        return console.log('something broke', err);
+    }
+
+    console.log('we\'re listening!');
+})
 
 const options = {
     hostname: 'taxes.aall.net',
@@ -16,46 +33,6 @@ const options = {
         'accept': '*/*'
     }
 }
-
-// const options = {
-//     xhrFields: {
-//         withCredentials: false
-//     },
-//     type: 'GET',
-//     // beforeSend: (xhr) => {
-//         //     xhr.setRequestHeader ("Authorization", "Basic YWFsbGFwaTpmaWUhMjNqNQ==")
-//         // },
-//     headers: {
-//         'Authorization': 'Basic YWFsbGFwaTpmaWUhMjNqNQ=='
-//     },
-//     async: true,
-//     dataType: 'jsonp',
-//     crossDomain: true,
-//     // dataFilter: (raw, type) => {
-//         //     rawData += raw;
-//         //     console.log('rawData: ', rawData);
-//         //     console.log('dataType: ', type);
-//         //     return raw;
-//         // },
-//     success: (data, x, y) => {
-//         console.log('data recieved: ', data);
-//         console.log('status: ', x);
-//     },
-//     error: (x, y, z) => {
-//         console.log('error: ', y);
-//     },
-//     url:'https://taxes.aall.net:829/AALLInternalAPI/api/leaderboard?strStartDate=2020-06-01&strEndDate=2020-06-30'
-// }
-
-// function getData() {
-//     $.ajax(options)
-// }
-
-// getData();
-
-// $().ready(()=>{
-// })
-
 
 https
 .request(
@@ -103,3 +80,44 @@ https
     console.error(`Got error: ${e.message}`)
 })
 .end();
+
+
+
+// const options = {
+//     xhrFields: {
+//         withCredentials: false
+//     },
+//     type: 'GET',
+//     // beforeSend: (xhr) => {
+//         //     xhr.setRequestHeader ("Authorization", "Basic YWFsbGFwaTpmaWUhMjNqNQ==")
+//         // },
+//     headers: {
+//         'Authorization': 'Basic YWFsbGFwaTpmaWUhMjNqNQ=='
+//     },
+//     async: true,
+//     dataType: 'jsonp',
+//     crossDomain: true,
+//     // dataFilter: (raw, type) => {
+//         //     rawData += raw;
+//         //     console.log('rawData: ', rawData);
+//         //     console.log('dataType: ', type);
+//         //     return raw;
+//         // },
+//     success: (data, x, y) => {
+//         console.log('data recieved: ', data);
+//         console.log('status: ', x);
+//     },
+//     error: (x, y, z) => {
+//         console.log('error: ', y);
+//     },
+//     url:'https://taxes.aall.net:829/AALLInternalAPI/api/leaderboard?strStartDate=2020-06-01&strEndDate=2020-06-30'
+// }
+
+// function getData() {
+//     $.ajax(options)
+// }
+
+// getData();
+
+// $().ready(()=>{
+// })
