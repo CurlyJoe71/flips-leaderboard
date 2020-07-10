@@ -1,24 +1,27 @@
 const https = require('https');
 const express = require('express');
 const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
-const app = express();
+const server = express();
 const { Server } = require('ws');
+const wss = new Server({ server });
 
-const wss = new Server({ app });
 
 const port = 7581;
-// const axios = require('axios');
-let rawData;
 let htmlData;
 
-app.get('/', (req, res) => {
-    res.send("Hello, up and running!", htmlData);
-})
+server.use((req, res) => res.send("Hello, up and running!", htmlData));
 
-app.listen(port, err => {
+server.listen(port, err => {
     if (err) {
         return console.log('Uh oh. Broken...');
+    } else {
+        return console.log('Listening...');
     }
+})
+
+wss.on('connection', ws => {
+    console.log('Client connected');
+    ws.on('close', () => console.log('Client disconnected'));
 })
 
 const options = {
@@ -84,10 +87,6 @@ function getData () {
     .end();
 }
 
-wss.on('connection', ws => {
-    console.log('Client connected');
-    ws.on('close', () => console.log('Client disconnected'));
-})
 
 // const options = {
 //     xhrFields: {
