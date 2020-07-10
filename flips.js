@@ -4,7 +4,7 @@ const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
 const app = express();
 const { Server } = require('ws');
 
-const wss = new Server({ server });
+const wss = new Server({ app });
 
 const port = 7581;
 // const axios = require('axios');
