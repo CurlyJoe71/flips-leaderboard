@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node flips.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "JMG",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "node-fetch": "^2.6.0"
   }
 }

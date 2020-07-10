@@ -1,24 +1,20 @@
 const https = require('https');
-const http = require('http');
+const express = require('express');
 const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
+const app = express();
 const port = 7581;
 // const axios = require('axios');
 let rawData;
 let htmlData;
 
-const requestHandler = (req, res) => {
-    console.log(req.url);
-    res.end('Hi. Got your request.');
-}
+app.get('/', (req, res) => {
+    res.send("Hello, up and running!");
+})
 
-const server = http.createServer(requestHandler);
-
-server.listen(port, err => {
+app.listen(port, err => {
     if (err) {
-        return console.log('something broke', err);
+        return console.log('Uh oh. Broken...');
     }
-
-    console.log('we\'re listening!');
 })
 
 const options = {
