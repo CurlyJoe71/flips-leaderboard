@@ -8,7 +8,7 @@ let rawData;
 let htmlData;
 
 app.get('/', (req, res) => {
-    res.send("Hello, up and running!");
+    res.send("Hello, up and running!", htmlData);
 })
 
 app.listen(port, err => {
@@ -30,52 +30,56 @@ const options = {
     }
 }
 
-https
-.request(
-    options,
-    res => {
-        const { statusCode } = res;
-        const contentType = res.headers['content-type'];
-
-        let err;
-        if (statusCode !== 200) {
-            err = new Error('Request Failed.\n' +
-                            `Status Code: ${statusCode}`);
-        }
-        else if (!/^application\/json/.test(contentType)) {
-            err = new Error('Invalid content-type.\n' +
-                                `Expected application/json but received ${contentType}`);
-        }
-        if (err) {
-            console.error(err.message);
-            res.resume();
-            return;
-        }
-
-        res.setEncoding('utf8');
-        let rawData = '';
-        res.on('data', chunk => {
-            rawData += chunk;
-        });
-
-        res.on('end', () => {
-            try {
-                const newRawData = JSON.stringify(rawData)
-                const parsedData = JSON.parse(newRawData);
-                // console.log("incoming parsed Data", newRawData);
-                console.log('\n\n\n parsedData:', parsedData);
-                // console.log('final parsed Data:', parsedData);
-                htmlData = parsedData;
+function getData () {
+    https
+    .request(
+        options,
+        res => {
+            const { statusCode } = res;
+            const contentType = res.headers['content-type'];
+    
+            let err;
+            if (statusCode !== 200) {
+                err = new Error('Request Failed.\n' +
+                                `Status Code: ${statusCode}`);
             }
-            catch (e) {
-                console.log("from res.on(end) catch block", e.message);
+            else if (!/^application\/json/.test(contentType)) {
+                err = new Error('Invalid content-type.\n' +
+                                    `Expected application/json but received ${contentType}`);
             }
-        });
+            if (err) {
+                console.error(err.message);
+                res.resume();
+                return;
+            }
+    
+            res.setEncoding('utf8');
+            let rawData = '';
+            res.on('data', chunk => {
+                rawData += chunk;
+            });
+    
+            res.on('end', () => {
+                try {
+                    const newRawData = JSON.stringify(rawData)
+                    const parsedData = JSON.parse(newRawData);
+                    // console.log("incoming parsed Data", newRawData);
+                    console.log('\n\n\n parsedData:', parsedData);
+                    // console.log('final parsed Data:', parsedData);
+                    htmlData = parsedData;
+                    return htmlData;
+                }
+                catch (e) {
+                    console.log("from res.on(end) catch block", e.message);
+                }
+            });
+        })
+    .on('error', e => {
+        console.error(`Got error: ${e.message}`)
     })
-.on('error', e => {
-    console.error(`Got error: ${e.message}`)
-})
-.end();
+    .end();
+
+}
 
 
 
