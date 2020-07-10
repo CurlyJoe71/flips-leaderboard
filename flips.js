@@ -2,6 +2,10 @@ const https = require('https');
 const express = require('express');
 const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
 const app = express();
+const { Server } = require('ws');
+
+const wss = new Server({ server });
+
 const port = 7581;
 // const axios = require('axios');
 let rawData;
@@ -78,10 +82,12 @@ function getData () {
         console.error(`Got error: ${e.message}`)
     })
     .end();
-
 }
 
-
+wss.on('connection', ws => {
+    console.log('Client connected');
+    ws.on('close', () => console.log('Client disconnected'));
+})
 
 // const options = {
 //     xhrFields: {
