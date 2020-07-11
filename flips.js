@@ -2,29 +2,30 @@ const https = require('https');
 const express = require('express');
 const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
 const server = express();
+const cors = require('cors');
 // const { Server } = require('ws');
 // const wss = new Server({ server });
 
 
 const port = process.env.PORT || 7581;
-let htmlData;
+let htmlData = {testing:"working?"};
 
-server.use((req, res) => {
-    res.send(htmlData)
-});
+server.use(cors());
+
+server.get('/', (req, res) => {
+    data();
+    setTimeout(() => {
+        res.send(htmlData);
+    }, 5000);
+})
 
 server.listen(port, err => {
     if (err) {
         return console.log('Uh oh. Broken...');
     } else {
-        return console.log('Listening...');
+        return console.log('Listening...' + port);
     }
 })
-
-// wss.on('connection', ws => {
-//     console.log('Client connected');
-//     ws.on('close', () => console.log('Client disconnected'));
-// })
 
 const options = {
     hostname: 'taxes.aall.net',
@@ -39,7 +40,7 @@ const options = {
     }
 }
 
-// function getData () {
+let data = () => {
     https
     .request(
         options,
@@ -73,7 +74,7 @@ const options = {
                     const newRawData = JSON.stringify(rawData)
                     const parsedData = JSON.parse(newRawData);
                     // console.log("incoming parsed Data", newRawData);
-                    console.log('\n\n\n parsedData:', parsedData);
+                    console.log('parsedData:', parsedData);
                     // console.log('final parsed Data:', parsedData);
                     htmlData = parsedData;
                     return htmlData;
@@ -87,7 +88,7 @@ const options = {
         console.error(`Got error: ${e.message}`)
     })
     .end();
-// }
+}
 
 
 // const options = {
