@@ -9,7 +9,7 @@ const server = express();
 const port = process.env.PORT || 7581;
 let htmlData;
 
-server.use((req, res) => res.send("Hello, up and running!", htmlData));
+server.use((req, res) => res.send("<h2>Hello, up and running!</h2>"));
 
 server.listen(port, err => {
     if (err) {
