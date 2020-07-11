@@ -2,8 +2,8 @@ const https = require('https');
 const express = require('express');
 const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
 const server = express();
-const { Server } = require('ws');
-const wss = new Server({ server });
+// const { Server } = require('ws');
+// const wss = new Server({ server });
 
 
 const port = process.env.PORT || 7581;
@@ -19,10 +19,10 @@ server.listen(port, err => {
     }
 })
 
-wss.on('connection', ws => {
-    console.log('Client connected');
-    ws.on('close', () => console.log('Client disconnected'));
-})
+// wss.on('connection', ws => {
+//     console.log('Client connected');
+//     ws.on('close', () => console.log('Client disconnected'));
+// })
 
 const options = {
     hostname: 'taxes.aall.net',
