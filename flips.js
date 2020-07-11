@@ -10,7 +10,6 @@ const port = process.env.PORT || 7581;
 let htmlData;
 
 server.use((req, res) => {
-    getData;
     res.send(htmlData)
 });
 
@@ -40,7 +39,7 @@ const options = {
     }
 }
 
-function getData () {
+// function getData () {
     https
     .request(
         options,
@@ -88,7 +87,7 @@ function getData () {
         console.error(`Got error: ${e.message}`)
     })
     .end();
-}
+// }
 
 
 // const options = {
