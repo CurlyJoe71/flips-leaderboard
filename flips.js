@@ -6,7 +6,7 @@ const { Server } = require('ws');
 const wss = new Server({ server });
 
 
-const port = 7581;
+const port = process.env.PORT || 7581;
 let htmlData;
 
 server.use((req, res) => res.send("Hello, up and running!", htmlData));
