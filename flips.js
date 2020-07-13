@@ -16,7 +16,7 @@ server.get('/', (req, res) => {
     data();
     setTimeout(() => {
         res.send(htmlData);
-    }, 5000);
+    }, 1000);
 })
 
 server.listen(port, err => {
@@ -30,7 +30,7 @@ server.listen(port, err => {
 const options = {
     hostname: 'taxes.aall.net',
     port: 829,
-    path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-06-01&strEndDate=2020-06-30',
+    path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-01&strEndDate=2020-07-30',
     rejectUnauthorized: false,
     method: 'GET',
     agent: keepAliveAgent,
