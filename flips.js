@@ -12,6 +12,17 @@ let htmlData = {testing:"working?"};
 
 server.use(cors());
 
+const date = new Date();
+let prevMon = addDays(date, -5);
+function addDays (date, days) {
+        let dt = new Date(date);
+        dt.setDate(dt.getDate() + days);
+        return dt;
+}
+let dateString = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+let prevMonString = `${prevMon.getFullYear()}-${prevMon.getMonth()+1}-${prevMon.getDate()}`;
+
+
 server.get('/', (req, res) => {
     data();
     setTimeout(() => {
@@ -30,7 +41,7 @@ server.listen(port, err => {
 const options = {
     hostname: 'taxes.aall.net',
     port: 829,
-    path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-13&strEndDate=2020-07-30',
+    path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + prevMonString + '&strEndDate=' + dateString,
     rejectUnauthorized: false,
     method: 'GET',
     agent: keepAliveAgent,
