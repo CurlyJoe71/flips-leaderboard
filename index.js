@@ -1,6 +1,6 @@
 const https = require('https');
 const express = require('express');
-const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
+const keepAliveAgent = new https.Agent({ keepAlive: true, timeout: 150000 });
 const server = express();
 const cors = require('cors');
 // const { Server } = require('ws');
@@ -27,7 +27,7 @@ server.get('/', (req, res) => {
     data();
     setTimeout(() => {
         res.send(htmlData);
-    }, 1000);
+    }, 6000);
 })
 
 server.listen(port, err => {
@@ -41,6 +41,8 @@ server.listen(port, err => {
 const options = {
     hostname: 'taxes.aall.net',
     port: 829,
+    // path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-01&strEndDate=2020-07-20',
+
     path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + prevMonString + '&strEndDate=' + dateString,
     rejectUnauthorized: false,
     method: 'GET',
@@ -50,6 +52,8 @@ const options = {
         'accept': '*/*'
     }
 }
+
+console.log('options path: ', options.path);
 
 let data = () => {
     https
@@ -62,7 +66,7 @@ let data = () => {
             let err;
             if (statusCode !== 200) {
                 err = new Error('Request Failed.\n' +
-                                `Status Code: ${statusCode}`);
+                                `Index Status Code: ${statusCode}`);
             }
             else if (!/^application\/json/.test(contentType)) {
                 err = new Error('Invalid content-type.\n' +
