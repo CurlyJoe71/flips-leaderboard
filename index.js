@@ -13,15 +13,25 @@ let htmlData = {testing:"working?"};
 server.use(cors());
 
 const date = new Date();
-let prevMon = addDays(date, -5);
+const day = date.getDay();
+let prevMon;
+if(date.getDay() == 0) {
+    prevMon = new Date().setDate(date.getDate() - 7);
+}
+else {
+    prevMon = new Date().setDate(date.getDate() - day);
+}
+
+console.log('prevMon: ', prevMon);
 function addDays (date, days) {
         let dt = new Date(date);
         dt.setDate(dt.getDate() + days);
         return dt;
 }
+let prevMonDate = new Date(prevMon);
 let dateString = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-let prevMonString = `${prevMon.getFullYear()}-${prevMon.getMonth()+1}-${prevMon.getDate()}`;
-
+let prevMonString = `${prevMonDate.getFullYear()}-${prevMonDate.getMonth()+1}-${prevMonDate.getDate()}`;
+// let prevMonString = '2020-07-20';
 
 server.get('/', (req, res) => {
     data();
