@@ -29,9 +29,10 @@ function addDays (date, days) {
         return dt;
 }
 let prevMonDate = new Date(prevMon);
+console.log('prevMonDate: ', prevMonDate);
 let dateString = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 let prevMonString = `${prevMonDate.getFullYear()}-${prevMonDate.getMonth()+1}-${prevMonDate.getDate()}`;
-// let prevMonString = '2020-07-20';
+console.log('prevMonString: ', prevMonString);
 
 server.get('/', (req, res) => {
     data();
@@ -51,9 +52,9 @@ server.listen(port, err => {
 const options = {
     hostname: 'taxes.aall.net',
     port: 829,
-    // path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-01&strEndDate=2020-07-20',
+    path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-20&strEndDate=2020-07-26',
 
-    path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + prevMonString + '&strEndDate=' + dateString,
+    // path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + prevMonString + '&strEndDate=' + dateString,
     rejectUnauthorized: false,
     method: 'GET',
     agent: keepAliveAgent,
