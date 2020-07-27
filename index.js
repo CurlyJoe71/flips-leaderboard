@@ -52,7 +52,7 @@ server.listen(port, err => {
 const options = {
     hostname: 'taxes.aall.net',
     port: 829,
-    path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-20&strEndDate=2020-07-26',
+    path:'/AALLInternalAPI/api/leaderboard?strStartDate=2020-07-27&strEndDate=2020-08-02',
 
     // path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + prevMonString + '&strEndDate=' + dateString,
     rejectUnauthorized: false,
