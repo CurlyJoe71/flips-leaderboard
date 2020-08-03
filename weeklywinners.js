@@ -19,7 +19,7 @@ console.log('prevMonString', prevMonString);
 const options = {
     hostname: 'taxes.aall.net',
     port: 829,
-    path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + prevMonString + '&strEndDate=' + dateString,
+    path:'/AALLInternalAPI/api/leaderboard?strStartDate=' + '2020-07-06' + '&strEndDate=' + '2020-07-12',
     rejectUnauthorized: false,
     method: 'GET',
     agent: keepAliveAgent,
@@ -56,6 +56,17 @@ sendMessage = html => {
             console.log('smtp info', info);
         }
     })
+}
+
+countFlips = data => {
+    console.log('data length: ', data.length);
+    let c = 0;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].Flipped === true) {
+            c++;
+        }
+    }
+    return c;
 }
 
 // let data = () => {
@@ -101,7 +112,9 @@ https
                 console.log("from res.on(end) catch block", e.message);
             }
             finally {
-                sendMessage(sort.sortReps(htmlData)+sort.sortOffice(htmlData)+sort.sortDataManager(htmlData));
+                const totalCount = countFlips(JSON.parse(htmlData));
+                console.log('totalCount', totalCount);
+                // sendMessage(sort.sortReps(htmlData)+sort.sortOffice(htmlData)+sort.sortDataManager(htmlData));
             }
         });
     })
